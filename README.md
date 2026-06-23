@@ -44,6 +44,7 @@
 也会安装或校验这些下游 Skill / 工具：
 
 - `$HOME\.codex\AGENTS.md` 中的 Design Orchestrator Guardrail，用来把自动编排规则放到更靠前的常驻说明层。
+- `design-auto-orchestrator/scripts/install-guardrail.ps1`：Skill 自带的守门规则安装脚本，安装器会自动执行它。
 - `ui-ux-pro-max`
 - `hallmark`
 - `better-icons`
@@ -111,6 +112,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\.codex\skills\design-
 - `design-auto-orchestrator` Skill：负责真正分类任务，并选择下游 Skill / 工具。
 
 只把规则写在 Skill 里不够稳，因为 Skill 内容只有在被选中后才会被读取；`AGENTS.md` 守门规则用来减少这种漏触发。
+
+因此这个套件不是只“复制一个 Skill 文件夹”。部署时会自动运行 `install-guardrail.ps1`，把强制前置读取规则写进 Codex 的常驻说明；健康检查也会验证 `AGENTS guardrail` 是否存在。
 
 比如当任务涉及这些内容时，Agent 应该自行介入设计编排：
 

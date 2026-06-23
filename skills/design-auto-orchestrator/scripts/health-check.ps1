@@ -41,6 +41,31 @@ function Test-PathResult {
   }
 }
 
+function Test-ContentResult {
+  param(
+    [string]$Name,
+    [string]$Path,
+    [string]$Pattern
+  )
+
+  $ok = $false
+  $detail = $Path
+  if (Test-Path -LiteralPath $Path) {
+    try {
+      $content = Get-Content -Raw -LiteralPath $Path
+      $ok = [bool]($content -match $Pattern)
+    } catch {
+      $detail = $_.Exception.Message
+    }
+  }
+
+  [pscustomobject]@{
+    Check = $Name
+    OK = $ok
+    Detail = $detail
+  }
+}
+
 $results = @()
 $results += Test-PathResult "skill ui-ux-pro-max" (Join-Path $skillRoot "ui-ux-pro-max\SKILL.md")
 $results += Test-PathResult "skill hallmark" (Join-Path $skillRoot "hallmark\SKILL.md")
@@ -51,6 +76,8 @@ $results += Test-PathResult "skill frontend-design" (Join-Path $skillRoot "front
 $results += Test-PathResult "skill design-taste-frontend" (Join-Path $skillRoot "design-taste-frontend\SKILL.md")
 $results += Test-PathResult "skill impeccable" (Join-Path $skillRoot "impeccable\SKILL.md")
 $results += Test-PathResult "skill design-auto-orchestrator" (Join-Path $skillRoot "design-auto-orchestrator\SKILL.md")
+$results += Test-PathResult "guardrail installer" (Join-Path $skillRoot "design-auto-orchestrator\scripts\install-guardrail.ps1")
+$results += Test-ContentResult "AGENTS guardrail" (Join-Path $CodexHome "AGENTS.md") "design-auto-orchestrator:begin[\s\S]*design-auto-orchestrator\\SKILL\.md[\s\S]*Do not begin design implementation"
 $results += Test-PathResult "source cache" $SourceCache
 
 $betterIcons = Get-Command better-icons -ErrorAction SilentlyContinue
