@@ -33,7 +33,7 @@ This avoids noisy global triggers such as `minimal`, `premium`, and `dashboard`,
 From PowerShell:
 
 ```powershell
-git clone https://github.com/YOUR_NAME/design-auto-orchestrator-kit.git
+git clone https://github.com/chongchonghaoman/design-auto-orchestrator-kit.git
 cd design-auto-orchestrator-kit
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install.ps1
 ```
