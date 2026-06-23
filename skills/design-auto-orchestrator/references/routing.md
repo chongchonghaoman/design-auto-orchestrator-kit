@@ -1,10 +1,12 @@
 # Routing Reference
 
-Use this file only when the best downstream route is not obvious from the request.
+Use this file only when the best downstream route is not obvious from the user request, project scan, screenshot, implementation context, or validation result.
+
+Do not require exact user wording. Route from observed signals during the work process.
 
 ## Creation And Redesign
 
-| Request shape | First route | Add when needed |
+| Observed signal | First route | Add when needed |
 |---|---|---|
 | "Give me a design system", "recommend style", "one sentence brief to UI" | `ui-ux-pro-max` | `frontend-design` for web page implementation |
 | SaaS dashboard, admin panel, settings, CRM, tables, filters, forms | `ui-design-brain` | `web-design-guidelines` for review |
@@ -15,7 +17,7 @@ Use this file only when the best downstream route is not obvious from the reques
 
 ## Audit And Polish
 
-| Request shape | First route | Add when needed |
+| Observed signal | First route | Add when needed |
 |---|---|---|
 | Accessibility, responsive, interface guideline review | `web-design-guidelines` | Playwright/screenshot checks |
 | Visual critique of screenshot | `hallmark study` or visual critique source library | `impeccable` |

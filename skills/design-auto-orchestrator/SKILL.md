@@ -1,15 +1,28 @@
 ---
 name: design-auto-orchestrator
-description: Automatic design-task orchestrator. Use for any UI, UX, frontend, product interface, website, landing page, portfolio, dashboard, admin panel, app screen, component, form, table, navigation, design system, typography, color, layout, motion, icon, accessibility, responsive, screenshot critique, visual polish, anti-AI-slop, Open Design, or design-resource selection task, even when the user does not name a design skill. Routes work to the right local design skills and tools automatically.
+description: Automatic background design-task orchestrator for Codex. Use proactively and silently for any user request or intermediate work step that touches UI, UX, frontend visuals, product interfaces, websites, landing pages, portfolios, dashboards, admin panels, app screens, components, forms, tables, navigation, design systems, typography, color, layout, motion, icons, accessibility, responsive behavior, screenshot critique, visual polish, anti-AI-slop, Open Design, or design-resource selection. Do not require the user to name this skill, downstream skills, Open Design, or any tool. Route work to the right local design skills and tools based on task semantics, project files, screenshots, and implementation context.
 ---
 
 # Design Auto Orchestrator
 
-This is the first stop for design-adjacent work. Treat vague user language as useful product/design signal, infer the real job, then route to the smallest useful combination of local design skills and tools.
+This is a background judgment layer for design-adjacent work. Treat vague user language, project files, screenshots, and intermediate implementation discoveries as useful product/design signal. Infer the real job, then route to the smallest useful combination of local design skills and tools.
 
 ## Core Rule
 
-Do not wait for the user to name a skill. If the request touches interface design, frontend visuals, UX quality, design systems, icons, screenshots, accessibility, layout, motion, or Open Design, classify the task and proceed.
+Do not wait for the user to name a skill, a downstream tool, or an invocation method. If the request or any work step touches interface design, frontend visuals, UX quality, design systems, icons, screenshots, accessibility, layout, motion, or Open Design, classify the task and proceed in the background.
+
+Do not present this skill as a user-facing command. The user should be able to describe normal work, and the agent should decide when this routing layer applies.
+
+## Automatic Background Use
+
+Apply this skill at task start or mid-task when design signals appear. Examples of mid-task signals:
+
+- A repo scan reveals React/Vue/Svelte/Next app UI files, component libraries, Tailwind, shadcn, CSS variables, or design tokens.
+- A coding task changes visible UI, layout, typography, colors, spacing, icons, interactive states, motion, or responsive behavior.
+- A screenshot, image, Figma/Open Design artifact, product page, dashboard, app screen, or portfolio appears in the context.
+- A verification pass finds visual regressions, clipped text, poor contrast, broken mobile layout, generic AI-looking styling, or inconsistent iconography.
+
+When this happens, enter this routing flow for the relevant substep, load only the needed downstream skill files, act, validate, and then return to the main task.
 
 Load only the selected downstream skill files. Do not blindly read every design skill.
 

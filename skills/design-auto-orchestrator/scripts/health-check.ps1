@@ -11,7 +11,23 @@ if (-not $CodexHome) {
 }
 
 if (-not $SourceCache) {
-  $SourceCache = Join-Path $CodexHome "design-skill-sources"
+  $defaultSourceCache = Join-Path $CodexHome "design-skill-sources"
+  $sourceCacheCandidates = @()
+  if ($env:DESIGN_SKILL_SOURCE_CACHE) {
+    $sourceCacheCandidates += $env:DESIGN_SKILL_SOURCE_CACHE
+  }
+  $sourceCacheCandidates += $defaultSourceCache
+  $sourceCacheCandidates += Get-PSDrive -PSProvider FileSystem | ForEach-Object {
+    Join-Path $_.Root "codex-design-skill-sources"
+  }
+
+  $SourceCache = $sourceCacheCandidates |
+    Where-Object { $_ -and (Test-Path -LiteralPath $_) } |
+    Select-Object -First 1
+
+  if (-not $SourceCache) {
+    $SourceCache = $defaultSourceCache
+  }
 }
 
 $skillRoot = Join-Path $CodexHome "skills"

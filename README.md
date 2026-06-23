@@ -2,13 +2,33 @@
 
 一个面向 Codex 的「设计类 Skill 自动编排 + 一键安装」开源套件。
 
-你把这个仓库链接发给 Agent，它可以把本仓库里的总控 Skill 装到本地，并同步安装/拉取它需要调用的设计类 Skill、CLI 工具和参考资源。目标是让 Codex 在做 UI、UX、前端视觉、图标、可访问性、Open Design 相关任务时，不需要你每次手动点名某个 Skill，而是由总控 Skill 在工作过程中自动判断该用什么。
+它的目标不是让用户多记一个 Skill 名字，也不是让用户学会某种调用方法。安装后，它应该变成 Agent 的后台判断层：用户照常提出产品、前端、页面、组件、图标、体验、视觉、响应式、可访问性等任务，Agent 在执行过程中自动判断当前步骤是否需要设计类 Skill / 工具，并按需加载。
+
+## 核心原则：用户不调用，Agent 自己判断
+
+这个仓库的设计初衷是：
+
+- 用户不需要说 `design-auto-orchestrator`。
+- 用户不需要说 `ui-ux-pro-max`、`hallmark`、`better-icons`、`Open Design` 等下游名字。
+- 用户不需要描述“请调用某某 Skill”。
+- Agent 应该根据任务语义、项目代码、截图、设计稿、当前实现步骤和验证结果，自动判断该用哪些设计工具。
+- 自动判断不只发生在任务开头，也应该发生在工作过程中的子步骤里。
+
+理想流程是：
+
+1. 用户正常交代任务。
+2. Agent 读取需求、扫描项目、查看截图或修改代码。
+3. 只要发现 UI / UX / frontend / visual polish / icon / accessibility / responsive / Open Design 相关子任务，就自动进入设计编排流程。
+4. 编排器选择最小但够用的下游 Skill / 工具组合。
+5. Agent 回到原任务继续实现、验证和交付。
+
+用户感知到的应该是「Agent 变聪明了」，而不是「我又多了一个要手动点名的工具」。
 
 ## 它解决什么问题
 
 很多设计类 Skill 单独都很有用，但直接堆在本地会有几个问题：
 
-- 你必须知道每个 Skill 的名字和适用场景。
+- 用户必须知道每个 Skill 的名字和适用场景。
 - 泛用词触发容易混乱，比如 `minimal`、`premium`、`dashboard` 之类。
 - 总控 Skill 如果只引用别的 Skill 名字，但用户本地没装，下游调用就会失效。
 - 别人拿到你的 Skill 仓库链接后，还要自己一个个找依赖，部署门槛太高。
@@ -19,7 +39,7 @@
 
 安装器会部署本仓库的核心 Skill：
 
-- `design-auto-orchestrator`：面向设计任务的自动路由器，会根据任务类型选择合适的本地 Skill、工具和参考库。
+- `design-auto-orchestrator`：设计任务后台编排器，负责根据任务和执行过程中的信号自动选择本地 Skill、工具和参考库。
 
 也会安装或校验这些下游 Skill / 工具：
 
@@ -39,7 +59,7 @@
 - `awesome-design-skills`
 - `designer-skills`
 
-这样可以减少全局 Skill 触发噪音，同时在需要时仍然能让总控 Skill 读取精确参考。
+这样可以减少全局 Skill 触发噪音，同时在需要时仍然能让编排器读取精确参考。
 
 ## 快速安装
 
@@ -80,20 +100,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\.codex\skills\design-
 powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\.codex\skills\design-auto-orchestrator\scripts\health-check.ps1" -SkipOpenDesign
 ```
 
-## 怎么使用
+## 安装后怎么生效
 
-重启 Codex 后，不需要刻意说 Skill 名字，直接用自然语言描述任务：
+正常向 Codex 提任务即可。不要为了触发它而刻意写 Skill 名字，也不要把工具名当成口令。
 
-```text
-这个页面 AI 味太重，帮我改得更高级。
-做一个 SaaS 后台 dashboard。
-重做这个官网首页。
-帮我找一个设置图标。
-检查这个 UI 的响应式和可访问性问题。
-这个本地设计稿用 Open Design 跑一下。
-```
+比如当任务涉及这些内容时，Agent 应该自行介入设计编排：
 
-`design-auto-orchestrator` 会先判断任务属于哪类设计工作，再选择最小但够用的 Skill / 工具组合。
+- 页面、官网、落地页、作品集、后台、dashboard、表单、表格、导航、组件。
+- 视觉不够高级、AI 味重、模板感强、布局松散、字体/颜色/间距不对。
+- 图标选择、设计系统、品牌风格、动效、响应式、可访问性、截图审查。
+- 现有前端项目里的 UI 实现、重构、打磨、上线前检查。
+
+如果某个 Agent 不支持本地 `SKILL.md` 自动发现，那么这个仓库只能完成安装，不能强行让那个 Agent 具备自动路由能力。Codex 支持通过 Skill 描述进行自动匹配，因此这个套件主要面向 Codex 本地环境。
 
 ## 重要说明
 
@@ -123,11 +141,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\.codex\skills\design-
 
 ## 推荐转发方式
 
-可以直接把这个仓库链接发给 Codex / Agent：
+可以直接把这个仓库链接发给 Codex / Agent，让它部署到本地：
 
 ```text
-请帮我部署这个 Codex 设计自动编排 Skill：
+请帮我把这个 GitHub 仓库部署到本地 Codex 环境：
 https://github.com/chongchonghaoman/design-auto-orchestrator-kit
 
-部署完成后运行健康检查，并告诉我哪些 Skill / 工具已经可用。
+部署完成后运行健康检查。后续我不会手动点名任何设计 Skill，请确认本地 Skill 描述支持按任务语义和执行步骤自动选择工具。
 ```
