@@ -87,3 +87,21 @@ The router classifies the task and chooses the smallest useful combination of lo
 - This repository does not vendor third-party skill source code. The installer downloads public upstream skill folders at install time.
 - Open Design is heavier than the pure skill installs. The installer attempts it when the local environment has Node 24 and pnpm.
 - Codex must be restarted after new skills are installed.
+
+## Upstream Projects
+
+This kit is an installer and router. It depends on these upstream projects at install time:
+
+- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+- [Hallmark](https://github.com/Nutlope/hallmark)
+- [Better Icons](https://github.com/better-auth/better-icons)
+- [UI Design Brain](https://github.com/carmahhawwari/ui-design-brain)
+- [Vercel Agent Skills](https://github.com/vercel-labs/agent-skills)
+- [Anthropic Skills](https://github.com/anthropics/skills)
+- [Taste Skill](https://github.com/Leonxlnx/taste-skill)
+- [Impeccable](https://github.com/pbakaus/impeccable)
+- [Open Design](https://github.com/nexu-io/open-design)
+- [Awesome Design Skills](https://github.com/bergside/awesome-design-skills)
+- [Designer Skills](https://github.com/Owl-Listener/designer-skills)
+
+Each upstream project remains owned by its authors and is governed by its own license. This repository downloads them from their public GitHub sources so users can update or inspect the original projects directly.
