@@ -1,6 +1,6 @@
 ---
 name: design-auto-orchestrator
-description: Automatic background design-task orchestrator for Codex. Use proactively and silently for any user request or intermediate work step that touches UI, UX, frontend visuals, product interfaces, websites, landing pages, portfolios, dashboards, admin panels, app screens, components, forms, tables, navigation, design systems, typography, color, layout, motion, icons, accessibility, responsive behavior, screenshot critique, visual polish, anti-AI-slop, Open Design, or design-resource selection. Do not require the user to name this skill, downstream skills, Open Design, or any tool. Route work to the right local design skills and tools based on task semantics, project files, screenshots, and implementation context.
+description: Mandatory primary background design-task orchestrator for Codex. Use this before any specialized design skill whenever a user request or intermediate work step touches UI, UX, frontend visuals, product interfaces, websites, landing pages, portfolios, dashboards, admin panels, app screens, components, forms, tables, navigation, design systems, typography, color, layout, motion, icons, accessibility, responsive behavior, screenshot critique, visual polish, anti-AI-slop, Open Design, or design-resource selection. Do not use frontend-design, hallmark, ui-ux-pro-max, ui-design-brain, web-design-guidelines, better-icons, or Open Design directly until this router has classified the task. Do not require the user to name this skill, downstream skills, Open Design, or any tool. Route work to the right local design skills and tools based on task semantics, project files, screenshots, and implementation context.
 ---
 
 # Design Auto Orchestrator
@@ -12,6 +12,12 @@ This is a background judgment layer for design-adjacent work. Treat vague user l
 Do not wait for the user to name a skill, a downstream tool, or an invocation method. If the request or any work step touches interface design, frontend visuals, UX quality, design systems, icons, screenshots, accessibility, layout, motion, or Open Design, classify the task and proceed in the background.
 
 Do not present this skill as a user-facing command. The user should be able to describe normal work, and the agent should decide when this routing layer applies.
+
+## Priority Rule
+
+When this skill and a more specific design skill both appear relevant, use this skill first. The router decides whether to load the specific skill.
+
+Do not skip this router because `frontend-design`, `hallmark`, `ui-ux-pro-max`, `ui-design-brain`, `web-design-guidelines`, `better-icons`, or `open-design` also matches the user request.
 
 ## Automatic Background Use
 
@@ -45,7 +51,8 @@ Fast defaults:
 
 - **Need a design system or style recommendation**: run `ui-ux-pro-max` first.
 - **SaaS/admin/dashboard/forms/tables/components**: use `ui-design-brain`.
-- **Landing page, portfolio, expressive web page, visual redesign**: use `frontend-design`, then `hallmark` or `design-taste-frontend` for anti-slop polish.
+- **Landing page, portfolio, expressive web page, visual redesign**: use `ui-ux-pro-max` first when the brief is vague or assets are sparse, then `frontend-design`, then `hallmark` or `design-taste-frontend` for anti-slop polish.
+- **Resume/PDF/text-only personal website with weak visual assets**: do not jump straight to HTML. Run a visual strategy pass first (`ui-ux-pro-max` or a concrete reference source), then implement, then critique screenshots with `hallmark` and `impeccable`.
 - **"Too AI", "not premium", "ugly", "generic", "make it high-end"**: use `hallmark`; add `impeccable` for deeper critique.
 - **Review/audit/accessibility/responsive quality**: use `web-design-guidelines`; add `hallmark audit` for visual slop.
 - **Icons**: use `better-icons` CLI.
@@ -99,10 +106,12 @@ For design build or redesign tasks, done means:
 
 - The selected design route is clear from the work.
 - Code or artifact is actually changed/created when requested.
+- A visual direction was chosen before implementation for websites, portfolios, landing pages, and other user-facing surfaces.
 - Obvious AI-design tropes are removed.
 - Mobile/responsive text and controls fit.
 - Icons are from a consistent source.
 - Accessibility basics are checked for interactive UI.
 - A smoke test, screenshot check, lint/build, or relevant health check ran when feasible.
+- A taste pass happened after screenshots. Passing layout, contrast, and responsiveness checks is not enough; if the screenshot looks generic, sparse, awkward, or unimpressive for the target audience, iterate before final.
 
 If a downstream tool is unavailable, name the missing piece and continue with the best local fallback.

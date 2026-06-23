@@ -10,7 +10,8 @@ Do not require exact user wording. Route from observed signals during the work p
 |---|---|---|
 | "Give me a design system", "recommend style", "one sentence brief to UI" | `ui-ux-pro-max` | `frontend-design` for web page implementation |
 | SaaS dashboard, admin panel, settings, CRM, tables, filters, forms | `ui-design-brain` | `web-design-guidelines` for review |
-| Landing page, portfolio, product homepage, marketing site | `frontend-design` | `hallmark`, `design-taste-frontend` |
+| Landing page, portfolio, product homepage, marketing site | `ui-ux-pro-max` when style is not locked, then `frontend-design` | `hallmark`, `design-taste-frontend`, `impeccable` |
+| Resume/PDF/text-only personal site with no strong imagery | `ui-ux-pro-max` visual strategy before implementation | `frontend-design`, `hallmark`, `impeccable`; ask for/generate/select real visual assets when needed |
 | Existing UI looks generic, AI-made, ugly, cheap, too templated | `hallmark` | `impeccable` |
 | Mobile app screen concept | `open-design` router or existing mobile/imagegen frontend skills | `ui-ux-pro-max` for system |
 | 3D or immersive web | existing `threejs` skill | screenshot/canvas validation |
@@ -59,6 +60,7 @@ Heavy:
 ## Escalation Rules
 
 - If a route chooses `ui-ux-pro-max`, run its search script before designing unless the user already provided a locked `DESIGN.md`.
+- For websites, portfolios, and landing pages, do not treat responsive checks as a taste pass. Inspect screenshots and iterate when the page is merely clean, sparse, generic, or not credible for the target audience.
 - If a route chooses `hallmark`, preserve codebase boundaries and read its required reference file for the verb used.
 - If a route chooses `web-design-guidelines`, fetch the latest Vercel guideline source when doing an actual review.
 - If a route chooses Open Design, check `http://127.0.0.1:7456/api/health` first. If down, start `od --no-open`.
