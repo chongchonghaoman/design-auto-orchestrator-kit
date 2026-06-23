@@ -43,6 +43,7 @@
 
 也会安装或校验这些下游 Skill / 工具：
 
+- `$HOME\.codex\AGENTS.md` 中的 Design Orchestrator Guardrail，用来把自动编排规则放到更靠前的常驻说明层。
 - `ui-ux-pro-max`
 - `hallmark`
 - `better-icons`
@@ -103,6 +104,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\.codex\skills\design-
 ## 安装后怎么生效
 
 正常向 Codex 提任务即可。不要为了触发它而刻意写 Skill 名字，也不要把工具名当成口令。
+
+安装器会做两层配置：
+
+- `AGENTS.md` 守门规则：新会话开始时就能看到，要求设计/前端/UI 相关任务先读取总控 Skill。
+- `design-auto-orchestrator` Skill：负责真正分类任务，并选择下游 Skill / 工具。
+
+只把规则写在 Skill 里不够稳，因为 Skill 内容只有在被选中后才会被读取；`AGENTS.md` 守门规则用来减少这种漏触发。
 
 比如当任务涉及这些内容时，Agent 应该自行介入设计编排：
 

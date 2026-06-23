@@ -77,6 +77,58 @@ function Copy-SkillDirectory {
   Write-Step "installed skill: $Name"
 }
 
+function Update-CodexAgentsGuardrail {
+  $agentsPath = Join-Path $CodexHome "AGENTS.md"
+  $begin = "<!-- design-auto-orchestrator:begin -->"
+  $end = "<!-- design-auto-orchestrator:end -->"
+  $skillPath = Join-Path $SkillRoot "design-auto-orchestrator\SKILL.md"
+  $block = @"
+$begin
+## Design Orchestrator Guardrail
+
+For any task that touches UI, UX, frontend visuals, websites, landing pages,
+portfolios, dashboards, admin panels, app screens, components, forms, tables,
+navigation, design systems, typography, color, layout, motion, icons,
+accessibility, responsive behavior, screenshot critique, visual polish,
+anti-AI-slop, Open Design, or design-resource selection, first open and read:
+
+$skillPath
+
+This is mandatory even when another specific skill such as frontend-design,
+hallmark, ui-ux-pro-max, ui-design-brain, web-design-guidelines,
+better-icons, pdf, playwright, stitch-design, or open-design also
+matches the request.
+
+Do not begin design implementation until the orchestrator has classified the
+task and selected the downstream route. For websites, portfolios, and landing
+pages, a responsive/layout pass is not enough: inspect screenshots for taste,
+specificity, credibility, and audience fit before final delivery.
+$end
+"@
+
+  New-Item -ItemType Directory -Force -Path $CodexHome | Out-Null
+  $existing = if (Test-Path -LiteralPath $agentsPath) {
+    Get-Content -Raw -LiteralPath $agentsPath
+  } else {
+    ""
+  }
+
+  $escapedBegin = [regex]::Escape($begin)
+  $escapedEnd = [regex]::Escape($end)
+  $pattern = "(?s)$escapedBegin.*?$escapedEnd"
+
+  if ($existing -match $pattern) {
+    $updated = [regex]::Replace($existing, $pattern, [System.Text.RegularExpressions.MatchEvaluator]{ param($m) $block.TrimEnd() }, 1)
+  } elseif ([string]::IsNullOrWhiteSpace($existing)) {
+    $updated = $block.TrimEnd() + [Environment]::NewLine
+  } else {
+    $updated = $existing.TrimEnd() + [Environment]::NewLine + [Environment]::NewLine + $block.TrimEnd() + [Environment]::NewLine
+  }
+
+  Set-Content -LiteralPath $agentsPath -Value $updated -Encoding UTF8
+  Write-Step "updated Codex AGENTS guardrail: $agentsPath"
+}
+
 function Get-GitHubZipRoot {
   param([string]$OwnerRepo, [string]$Ref = "main")
 
@@ -345,6 +397,7 @@ New-Item -ItemType Directory -Force -Path $SkillRoot | Out-Null
 
 Write-Step "installing orchestrator"
 Copy-SkillDirectory -Source (Join-Path $RepoRoot "skills\design-auto-orchestrator") -Name "design-auto-orchestrator"
+Update-CodexAgentsGuardrail
 
 Write-Step "installing downstream skills"
 Install-UiUxProMax
