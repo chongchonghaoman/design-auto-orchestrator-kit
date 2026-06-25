@@ -1,7 +1,8 @@
 param(
   [string]$CodexHome = "",
   [string]$SourceCache = "",
-  [switch]$SkipOpenDesign
+  [switch]$SkipOpenDesign,
+  [switch]$DeepPromptCheck
 )
 
 $ErrorActionPreference = "Continue"
@@ -76,6 +77,7 @@ $results += Test-PathResult "skill frontend-design" (Join-Path $skillRoot "front
 $results += Test-PathResult "skill design-taste-frontend" (Join-Path $skillRoot "design-taste-frontend\SKILL.md")
 $results += Test-PathResult "skill impeccable" (Join-Path $skillRoot "impeccable\SKILL.md")
 $results += Test-PathResult "skill design-auto-orchestrator" (Join-Path $skillRoot "design-auto-orchestrator\SKILL.md")
+$results += Test-ContentResult "orchestrator trigger frontload" (Join-Path $skillRoot "design-auto-orchestrator\SKILL.md") "description:\s*(?:>-\s*)?UI/UX frontend website portfolio router"
 $results += Test-PathResult "guardrail installer" (Join-Path $skillRoot "design-auto-orchestrator\scripts\install-guardrail.ps1")
 $results += Test-ContentResult "AGENTS guardrail" (Join-Path $CodexHome "AGENTS.md") "design-auto-orchestrator:begin[\s\S]*design-auto-orchestrator\\SKILL\.md[\s\S]*Do not begin design implementation"
 $results += Test-PathResult "source cache" $SourceCache
@@ -154,6 +156,24 @@ try {
     Check = "better-icons search"
     OK = $false
     Detail = $_.Exception.Message
+  }
+}
+
+if ($DeepPromptCheck) {
+  try {
+    $verifyScript = Join-Path $skillRoot "design-auto-orchestrator\scripts\verify-prompt-guardrail.ps1"
+    $promptCheck = powershell -NoProfile -ExecutionPolicy Bypass -File $verifyScript 2>&1
+    $results += [pscustomobject]@{
+      Check = "prompt guardrail visible"
+      OK = ($LASTEXITCODE -eq 0)
+      Detail = ($promptCheck | Select-Object -First 4) -join " "
+    }
+  } catch {
+    $results += [pscustomobject]@{
+      Check = "prompt guardrail visible"
+      OK = $false
+      Detail = $_.Exception.Message
+    }
   }
 }
 

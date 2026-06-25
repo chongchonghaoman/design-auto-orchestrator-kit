@@ -1,6 +1,16 @@
 ---
 name: design-auto-orchestrator
-description: Mandatory primary background design-task orchestrator for Codex. Use this before any specialized design skill whenever a user request or intermediate work step touches UI, UX, frontend visuals, product interfaces, websites, landing pages, portfolios, dashboards, admin panels, app screens, components, forms, tables, navigation, design systems, typography, color, layout, motion, icons, accessibility, responsive behavior, screenshot critique, visual polish, anti-AI-slop, Open Design, or design-resource selection. Do not use frontend-design, hallmark, ui-ux-pro-max, ui-design-brain, web-design-guidelines, better-icons, or Open Design directly until this router has classified the task. Do not require the user to name this skill, downstream skills, Open Design, or any tool. Route work to the right local design skills and tools based on task semantics, project files, screenshots, and implementation context.
+description: >-
+  UI/UX frontend website portfolio router. Mandatory first-use design orchestrator for Codex.
+  Use before frontend-design, hallmark, ui-ux-pro-max, ui-design-brain, web-design-guidelines,
+  better-icons, Open Design, or other specialized design skills whenever a request or intermediate
+  work step touches UI, UX, frontend visuals, product interfaces, websites, landing pages,
+  portfolios, dashboards, admin panels, app screens, components, forms, tables, navigation,
+  design systems, typography, color, layout, motion, icons, accessibility, responsive behavior,
+  screenshot critique, visual polish, anti-AI-slop, Open Design, or design-resource selection.
+  Do not require the user to name this skill, downstream skills, Open Design, or any tool. Route
+  work to the right local design skills and tools based on task semantics, project files,
+  screenshots, and implementation context.
 ---
 
 # Design Auto Orchestrator

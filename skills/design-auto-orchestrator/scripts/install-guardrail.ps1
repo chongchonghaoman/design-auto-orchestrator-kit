@@ -29,11 +29,13 @@ $block = @"
 $begin
 ## Design Orchestrator Guardrail
 
-For any task that touches UI, UX, frontend visuals, websites, landing pages,
-portfolios, dashboards, admin panels, app screens, components, forms, tables,
-navigation, design systems, typography, color, layout, motion, icons,
-accessibility, responsive behavior, screenshot critique, visual polish,
-anti-AI-slop, Open Design, or design-resource selection, first open and read:
+For any UI/UX/frontend/design task, first open and read this orchestrator.
+This includes requests in any language about personal sites, official sites,
+portfolios, landing pages, admin panels, dashboards, app screens, components,
+forms, tables, navigation, icons, responsive UI, accessibility, visual polish,
+anti-AI-slop, Open Design, or design-resource selection.
+
+Required first file:
 
 $skillPath
 

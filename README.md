@@ -96,6 +96,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install.ps1 -Codex
 powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\.codex\skills\design-auto-orchestrator\scripts\health-check.ps1"
 ```
 
+如果要确认新会话的模型上下文里真的能看到强制守门规则，运行深度检查：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\.codex\skills\design-auto-orchestrator\scripts\health-check.ps1" -DeepPromptCheck
+```
+
 如果安装时用了 `-SkipOpenDesign`，健康检查也传入同样参数：
 
 ```powershell
